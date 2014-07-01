@@ -83,9 +83,9 @@ if (($domain_crt eq '') && ($domain_key eq ''))
         my $ssl_key = '/home/e-smith/ssl.key';
         my $domain = $config_db->get_value('DomainName');
         my $server = $config_db->get_value('SystemName');
-        my $crt_path = $ssl_crt/$domain.crt;
-        my $key_path = $ssl_key/$domain.key;
-        my $chain_path = $ssl_crt/chain.pem;
+        my $crt_path = $ssl_crt/$domain.'.crt';
+        my $key_path = $ssl_key/$domain.'.key';
+        my $chain_path = $ssl_crt/'chain.pem';
         
         system("/sbin/e-smith/db configuration setprop modSSL crt $ssl_crt/$server.$domain.crt");
         system("/sbin/e-smith/db configuration setprop modSSL key $ssl_key/$server.$domain.key");
