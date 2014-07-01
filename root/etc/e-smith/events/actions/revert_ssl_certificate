@@ -1,0 +1,22 @@
+#! /usr/bin/perl -w
+use strict;
+use warnings;
+use esmith::ConfigDB;
+
+
+    my $config_db = esmith::ConfigDB->open || die "Couldn't open ConfigDB\n";
+    my $ssl_crt = '/home/e-smith/ssl.crt';
+    my $ssl_key = '/home/e-smith/ssl.key';
+    my $domain = $config_db->get_value('DomainName');
+    my $server = $config_db->get_value('SystemName');
+
+
+    system("/sbin/e-smith/db configuration setprop modSSL crt $ssl_crt/$server.$domain.crt");
+    system("/sbin/e-smith/db configuration setprop modSSL key $ssl_key/$server.$domain.key");
+    system("/sbin/e-smith/db configuration delprop modSSL CertificateChainFile");
+    system("/sbin/e-smith/expand-template /home/e-smith/ssl.pem/pem");
+    system("/sbin/e-smith/expand-template /etc/httpd/conf/httpd.conf");
+    system("/sbin/service httpd-e-smith restart");
+    system("/sbin/e-smith/signal-event ldap-update");
+    system("/sbin/e-smith/signal-event email-update");
+    exit

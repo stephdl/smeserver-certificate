@@ -1,0 +1,22 @@
+<!-- vim: ft=xml ts=4 sw=8 noet:
+-->
+<lexicon lang="en-us">
+    <entry>
+        <base>FORM_TITLE</base>
+        <trans>
+               SSL certificats management
+        </trans>
+    </entry>
+    <entry>
+        <base>certificats</base>
+        <trans>Manage your SSL certificats</trans>
+    </entry> 
+    <entry>
+        <base>DESC_SSL_CERTIFICAT_CONFIG_PAGE</base>
+        <trans>
+         The purpose of that contrib is to help to manage SSL certificats
+        </trans>
+    </entry>
+
+</lexicon>
+

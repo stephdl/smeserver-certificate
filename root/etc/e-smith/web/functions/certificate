@@ -1,0 +1,78 @@
+#! /usr/bin/perl -wT
+# vim: ft=xml:
+
+#----------------------------------------------------------------------
+# heading     : Configuration
+# description : Certificate
+# navigation  : 6000 6750
+#
+#----------------------------------------------------------------------
+# copyright (C) 2008 Berteaud Daniel
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+# 
+#----------------------------------------------------------------------
+use strict;
+use esmith::FormMagick;
+use esmith::ConfigDB;
+use esmith::FormMagick::Panel::certificate;
+
+my $fm = esmith::FormMagick::Panel::certificate->new();
+my $q = $fm->{cgi};
+$fm->display();
+
+
+__DATA__
+
+<form
+    title="FORM_TITLE"
+    header="/etc/e-smith/web/common/head.tmpl"
+    footer="/etc/e-smith/web/common/foot.tmpl">
+
+    // CA
+    <page name="FIRST"
+        pre-event="print_status_message()"
+        post-event="write_pem()">
+
+        <field type="literal"
+            id="desc_initial_config"
+            value="">
+            <description>DESC_SSL_CERTIFICAT_CONFIG_PAGE</description>
+    </field>
+
+
+        <field type="textarea"
+            id="ca_crt"
+            rows="15"
+            cols="70"
+            value="read_pem('domain.crt')">
+            <label>LABEL_DOMAIN_CRT</label>
+            <description>DESC_DOMAIN_CRT</description>
+        </field>
+
+        <field type="textarea"
+            id="ca_key"
+            rows="15"
+            cols="70"
+            value="read_pem('domain.key')">
+            <label>LABEL_DOMAIN_KEY</label>
+            <description>DESC_DOMAIN_KEY</description>
+        </field>
+
+        <subroutine src="print_button('SAVE')" />
+    </page>
+
+</form>
+
