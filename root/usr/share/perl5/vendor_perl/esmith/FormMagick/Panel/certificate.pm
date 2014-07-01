@@ -24,7 +24,6 @@ our $config_db = esmith::ConfigDB->open || die "Couldn't open ConfigDB\n";
 our $ssl_crt = '/home/e-smith/ssl.crt';
 our $ssl_key = '/home/e-smith/ssl.key';
 
-#*wherenext = \&CGI::FormMagick::wherenext;
 sub new {
     shift;
     my $fm = esmith::FormMagick->new();
@@ -34,13 +33,6 @@ sub new {
 }
 
 
-
-sub print_section_bar{
-    my ($fm) = @_;
-    print "  <tr>\n    <td colspan='2'>\n";
-    print "<hr class=\"sectionbar\"/>\n";
-    return undef;
-}
 
 sub read_pem{
     my ($fm,$pem) = @_;
@@ -88,8 +80,9 @@ if (($domain_crt eq '') && ($domain_key eq ''))
         my $ssl_key = '/home/e-smith/ssl.key';
         my $domain = $config_db->get_value('DomainName');
         my $server = $config_db->get_value('SystemName');
-
-
+        my $crt_path = $ssl_crt/$domain.crt;
+        my $key_path = $ssl_key/$domain.key;
+        
         system("/sbin/e-smith/db configuration setprop modSSL crt $ssl_crt/$server.$domain.crt");
         system("/sbin/e-smith/db configuration setprop modSSL key $ssl_key/$server.$domain.key");
         system("/sbin/e-smith/db configuration delprop modSSL CertificateChainFile");
@@ -98,7 +91,12 @@ if (($domain_crt eq '') && ($domain_key eq ''))
         system("/sbin/service httpd-e-smith restart");
         system("/sbin/e-smith/signal-event ldap-update");
         system("/sbin/e-smith/signal-event email-update");
-        unlink "$ssl_crt/$domain.crt" , "$ssl_key/$domain.key" ;
+
+            if ((defined $crt_path) && (defined $key_path))
+                {
+                system("/bin/rm $ssl_crt/$domain.crt");
+                system("/bin/rm $ssl_key/$domain.key");
+                }
 
     }
 
