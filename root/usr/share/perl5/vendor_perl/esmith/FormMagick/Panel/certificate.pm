@@ -98,6 +98,8 @@ if (($domain_crt eq '') && ($domain_key eq ''))
         system("/sbin/service httpd-e-smith restart");
         system("/sbin/e-smith/signal-event ldap-update");
         system("/sbin/e-smith/signal-event email-update");
+        unlink "$ssl_crt/$domain.crt" , "$ssl_key/$domain.key" ;
+
     }
 
 elsif (($domain_crt ne '') && ($domain_key ne ''))
