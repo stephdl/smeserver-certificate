@@ -111,11 +111,11 @@ sub write_pem{
 
     system("/sbin/e-smith/expand-template /home/e-smith/ssl.pem/pem");
     system("/sbin/e-smith/expand-template /etc/httpd/conf/httpd.conf");
-    system("/sbin/service httpd-e-smith restart");
+    system("/sbin/service httpd-e-smith restart >/dev/null 2>&1");
     
     system("/sbin/e-smith/signal-event ldap-update");
     system("/sbin/e-smith/signal-event email-update");
-    #$fm->success('SUCCESS','FIRST');
+    $fm->success('SUCCESS','FIRST');
     return undef;
 }
 
