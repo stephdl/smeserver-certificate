@@ -49,7 +49,10 @@ sub read_pem{
         $dir = $ssl_key;
         $pem = "$domain.key";
     }
-
+    if ($pem eq 'certificate.chainfile') {
+        $dir = $ssl_crt;
+        $pem = "chain.pem";
+    }
     if (! open (PEM, "<$dir/$pem")){
         $fm->error('ERROR_OPEN_PEM','FIRST');
         # Tell the user something bad has happened
@@ -70,7 +73,7 @@ sub write_pem{
 
     my $domain_crt  = $q->param('ca_crt');
     my $domain_key = $q->param('ca_key');
-   # my $key = $q->param('key_pem');
+    my $chain_crt = $q->param('chain_crt_file');
    # my $dh = $q->param('dhpar_pem');
    # my $ta = $q->param('ta_pem');
 
@@ -82,6 +85,7 @@ if (($domain_crt eq '') && ($domain_key eq ''))
         my $server = $config_db->get_value('SystemName');
         my $crt_path = $ssl_crt/$domain.crt;
         my $key_path = $ssl_key/$domain.key;
+        my $chain_path = $ssl_crt/chain.pem;
         
         system("/sbin/e-smith/db configuration setprop modSSL crt $ssl_crt/$server.$domain.crt");
         system("/sbin/e-smith/db configuration setprop modSSL key $ssl_key/$server.$domain.key");
@@ -92,11 +96,10 @@ if (($domain_crt eq '') && ($domain_key eq ''))
         system("/sbin/e-smith/signal-event ldap-update");
         system("/sbin/e-smith/signal-event email-update");
 
-            if ((defined $crt_path) && (defined $key_path))
-                {
-                system("/bin/rm $ssl_crt/$domain.crt");
-                system("/bin/rm $ssl_key/$domain.key");
-                }
+                
+                system("/bin/rm $ssl_crt/$domain.crt") if defined $crt_path;
+                system("/bin/rm $ssl_key/$domain.key") if defined $key_path;
+                system("/bin/rm $ssl_crt/chain.pem") if defined $chain_path;
 
     }
 
@@ -118,6 +121,14 @@ elsif (($domain_crt ne '') && ($domain_key ne ''))
         print CRT $domain_key;
         close CRT;
 
+        if (! open (CHAIN, ">$ssl_crt/chain.pem")){
+            $fm->error('ERROR_OPEN_KEY','FIRST');
+            # Tell the user something bad has happened
+            return;
+        }
+        print CHAIN $chain_crt;
+        close CHAIN;
+        
         # Restrict permissions on sensitive data
         esmith::util::chownFile("root", "root","$ssl_key/$domain.key");
         esmith::util::chownFile("root", "root","$ssl_crt/$domain.crt");
@@ -126,14 +137,14 @@ elsif (($domain_crt ne '') && ($domain_key ne ''))
 
         system("/sbin/e-smith/db configuration setprop modSSL crt $ssl_crt/$domain.crt");
         system("/sbin/e-smith/db configuration setprop modSSL key $ssl_key/$domain.key");
-
+        system("/sbin/e-smith/db configuration setprop modSSL CertificateChainFile $ssl_crt/chain.pem") if  $chain_crt ne '';
         system("/sbin/e-smith/expand-template /home/e-smith/ssl.pem/pem");
         system("/sbin/e-smith/expand-template /etc/httpd/conf/httpd.conf");
         system("/sbin/service httpd-e-smith restart >/dev/null 2>&1");
     
         system("/sbin/e-smith/signal-event ldap-update");
         system("/sbin/e-smith/signal-event email-update");
-        $fm->success('SUCCESS','FIRST');
+        #$fm->success('SUCCESS','FIRST');
         return undef;
     }
 }

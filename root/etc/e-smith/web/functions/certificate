@@ -70,7 +70,15 @@ __DATA__
             <label>LABEL_DOMAIN_KEY</label>
             <description>DESC_DOMAIN_KEY</description>
         </field>
-
+        
+        <field type="textarea"
+            id="chain_crt_file"
+            rows="15"
+            cols="70"
+            value="read_pem('certificate.chainfile')">
+            <label>LABEL_CERTIFICATE_CHAINFILE</label>
+            <description>DESC_CERTIFICATE_CHAINFILE</description>
+        </field>
         <subroutine src="print_button('SAVE')" />
     </page>
 
