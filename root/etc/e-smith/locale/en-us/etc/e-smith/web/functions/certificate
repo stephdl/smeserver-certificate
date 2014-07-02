@@ -4,19 +4,52 @@
     <entry>
         <base>FORM_TITLE</base>
         <trans>
-               SSL certificats management
+               SSL certificates management
         </trans>
     </entry>
     <entry>
-        <base>certificats</base>
-        <trans>Manage your SSL certificats</trans>
+        <base>certificate</base>
+        <trans>Manage your SSL certificate</trans>
     </entry> 
     <entry>
         <base>DESC_SSL_CERTIFICAT_CONFIG_PAGE</base>
         <trans>
-         The purpose of that contrib is to help to manage SSL certificats
+         <![CDATA[The purpose of that contrib is to help to manage commercial SSL certificates. The SME Server can work with its own custom SSL Certificate.<br>
+         If you want to get back to default SME Server certificates, simply blank all their contents.<br>
+         In case of you set a wrong certificate, the server Web may crash, you will have to do a command line in a root Terminal to get back to the default certificate : <br>
+         <b>signal-event certificate-revert</b><br><br>]]>
+         
         </trans>
     </entry>
 
+    <entry>
+        <base>DESC_DOMAIN_CRT</base>
+        <trans>Paste Here the full certificate (server.crt)</trans>
+    </entry> 
+
+    <entry>
+        <base>LABEL_DOMAIN_CRT </base>
+        <trans>SSL certificate (.crt)</trans>
+    </entry> 
+
+    <entry>
+        <base>DESC_DOMAIN_KEY</base>
+        <trans>Paste Here the full private key (server.key)</trans>
+    </entry> 
+    
+    <entry>
+        <base>LABEL_DOMAIN_KEY</base>
+        <trans>SSL private Key (.key)</trans>
+    </entry> 
+
+    <entry>
+        <base>DESC_CERTIFICATE_CHAINFILE</base>
+        <trans>You may need the intermediate CA certificate as 'chain' certificate in your clientssl profile.</trans>
+    </entry> 
+
+     <entry>
+        <base>LABEL_CERTIFICATE_CHAINFILE </base>
+        <trans>SSL intermediate chain certificate</trans>
+    </entry> 
 </lexicon>
 

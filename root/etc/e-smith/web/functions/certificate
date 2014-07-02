@@ -7,7 +7,7 @@
 # navigation  : 6000 6750
 #
 #----------------------------------------------------------------------
-# copyright (C) 2008 Berteaud Daniel
+# copyright (C) 2014 Stephane de Labrusse
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -50,9 +50,8 @@ __DATA__
             id="desc_initial_config"
             value="">
             <description>DESC_SSL_CERTIFICAT_CONFIG_PAGE</description>
-    </field>
-
-
+        </field>
+        
         <field type="textarea"
             id="ca_crt"
             rows="15"
