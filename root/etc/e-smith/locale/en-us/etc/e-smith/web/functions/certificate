@@ -9,14 +9,14 @@
     </entry>
     <entry>
         <base>certificate</base>
-        <trans>Manage your SSL certificate</trans>
+        <trans>Manage your SSL certificates</trans>
     </entry> 
     <entry>
         <base>DESC_SSL_CERTIFICAT_CONFIG_PAGE</base>
         <trans>
-         <![CDATA[The purpose of that contrib is to help to manage commercial SSL certificates. The SME Server can work with its own custom SSL Certificate.<br>
-         If you want to get back to default SME Server certificates, simply blank all their contents.<br>
-         In case of you set a wrong certificate, the server Web may crash, you will have to do a command line in a root Terminal to get back to the default certificate : <br>
+         <![CDATA[The purpose of that contrib is to help to manage  SSL certificates. The SME Server can work with its own custom SSL Certificate.<br>
+         If you want to get back to default SME Server certificates, simply blank all the contents and save.<br>
+         In case of you set a wrong certificate, the server Web may crash. You will have to do a command line in a root Terminal to get back to the default certificate : <br><br>
          <b>signal-event certificate-revert</b><br><br>]]>
          
         </trans>
@@ -28,8 +28,8 @@
     </entry> 
 
     <entry>
-        <base>LABEL_DOMAIN_CRT </base>
-        <trans>SSL certificate (.crt)</trans>
+        <base>LABEL_DOMAIN_CRT</base>
+        <trans>SSL certificate</trans>
     </entry> 
 
     <entry>
@@ -39,16 +39,16 @@
     
     <entry>
         <base>LABEL_DOMAIN_KEY</base>
-        <trans>SSL private Key (.key)</trans>
+        <trans>SSL private Key</trans>
     </entry> 
 
     <entry>
         <base>DESC_CERTIFICATE_CHAINFILE</base>
-        <trans>You may need the intermediate CA certificate as 'chain' certificate in your clientssl profile.</trans>
+        <trans>You may need the intermediate CA certificate as 'chain' certificate in your clientssl profile. Paste here the full chain file</trans>
     </entry> 
 
      <entry>
-        <base>LABEL_CERTIFICATE_CHAINFILE </base>
+        <base>LABEL_CERTIFICATE_CHAINFILE</base>
         <trans>SSL intermediate chain certificate</trans>
     </entry> 
 </lexicon>
