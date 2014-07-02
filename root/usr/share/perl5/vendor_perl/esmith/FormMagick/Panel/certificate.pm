@@ -83,9 +83,9 @@ if (($domain_crt eq '') && ($domain_key eq ''))
         my $ssl_key = '/home/e-smith/ssl.key';
         my $domain = $config_db->get_value('DomainName');
         my $server = $config_db->get_value('SystemName');
-        my $crt_path = $ssl_crt/$domain.'.crt';
-        my $key_path = $ssl_key/$domain.'.key';
-        my $chain_path = $ssl_crt/'chain.pem';
+        my $crt_path = $ssl_crt.'/'.$domain.'.crt';
+        my $key_path = $ssl_key.'/'.$domain.'.key';
+        my $chain_path = $ssl_crt.'/chain.pem';
         
         system("/sbin/e-smith/db configuration setprop modSSL crt $ssl_crt/$server.$domain.crt");
         system("/sbin/e-smith/db configuration setprop modSSL key $ssl_key/$server.$domain.key");
@@ -96,11 +96,11 @@ if (($domain_crt eq '') && ($domain_key eq ''))
         system("/sbin/e-smith/signal-event ldap-update");
         system("/sbin/e-smith/signal-event email-update");
 
-                
-                system("/bin/rm $ssl_crt/$domain.crt") if defined $crt_path;
-                system("/bin/rm $ssl_key/$domain.key") if defined $key_path;
-                system("/bin/rm $ssl_crt/chain.pem") if defined $chain_path;
-
+               if ((defined $crt_path) && ( defined  $key_path )) { 
+                system("/bin/rm $ssl_crt/$domain.crt");
+                system("/bin/rm $ssl_key/$domain.key");
+                system("/bin/rm $ssl_crt/chain.pem");
+               }
     }
 
 elsif (($domain_crt ne '') && ($domain_key ne ''))
@@ -137,7 +137,9 @@ elsif (($domain_crt ne '') && ($domain_key ne ''))
 
         system("/sbin/e-smith/db configuration setprop modSSL crt $ssl_crt/$domain.crt");
         system("/sbin/e-smith/db configuration setprop modSSL key $ssl_key/$domain.key");
-        system("/sbin/e-smith/db configuration setprop modSSL CertificateChainFile $ssl_crt/chain.pem") if  $chain_crt ne '';
+	if  ($chain_crt ne '') {
+        system("/sbin/e-smith/db configuration setprop modSSL CertificateChainFile /home/e-smith/ssl.crt/chain.pem");
+        }
         system("/sbin/e-smith/expand-template /home/e-smith/ssl.pem/pem");
         system("/sbin/e-smith/expand-template /etc/httpd/conf/httpd.conf");
         system("/sbin/service httpd-e-smith restart >/dev/null 2>&1");
