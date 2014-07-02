@@ -7,9 +7,7 @@ use warnings;
 use esmith::ConfigDB;
 use esmith::FormMagick;
 use esmith::cgi;
-#use esmith::util;
-#use Net::OpenVPN::Manage;
-#use Net::IP;
+
 
 our @ISA = qw(esmith::FormMagick Exporter);
 
@@ -41,7 +39,7 @@ sub read_pem{
     my $ret;
     my $domain = $config_db->get_value('DomainName');
 
-    if ($pem eq 'domain.crt') { #|| ($pem eq 'cert.pem') || ($pem eq 'dh.pem')){
+    if ($pem eq 'domain.crt') { 
         $dir = $ssl_crt;
         $pem = "$domain.crt";
     }
@@ -69,27 +67,30 @@ sub read_pem{
 sub write_pem{
     my ($fm) = @_;
     my $q = $fm->{cgi};
-    my $domain = $config_db->get_value('DomainName');
+    my $domain = $config_db->get_value('DomainName')|| die "Couldn't open ConfigDB\n";
 
-    my $domain_crt  = $q->param('ca_crt');
-    my $domain_key = $q->param('ca_key');
-    my $chain_crt = $q->param('chain_crt_file');
-   # my $dh = $q->param('dhpar_pem');
-   # my $ta = $q->param('ta_pem');
+    my $domain_crt  = $q->param('ca_crt') || '';
+    my $domain_key = $q->param('ca_key') || '';
+    my $chain_crt = $q->param('chain_crt_file') || '';
+
 
 if (($domain_crt eq '') && ($domain_key eq ''))
     {
-        my $ssl_crt = '/home/e-smith/ssl.crt';
-        my $ssl_key = '/home/e-smith/ssl.key';
-        my $domain = $config_db->get_value('DomainName');
-        my $server = $config_db->get_value('SystemName');
-        my $crt_path = $ssl_crt.'/'.$domain.'.crt';
-        my $key_path = $ssl_key.'/'.$domain.'.key';
-        my $chain_path = $ssl_crt.'/chain.pem';
+        my $ssl_crt     = '/home/e-smith/ssl.crt';
+        my $ssl_key     = '/home/e-smith/ssl.key';
+
+        my $domain      = $config_db->get_value('DomainName') || die "Couldn't open ConfigDB\n";
+        my $server      = $config_db->get_value('SystemName') || die "Couldn't open ConfigDB\n";
+
+        my $crt_path    = "$ssl_crt" . '/' . $domain . '.crt' || '';
+        my $key_path    = "$ssl_key" . '/' . $domain . '.key' || '';
+        my $chain_path  = "$ssl_crt" . '/chain.pem' || '';
         
+        #we return to the default certificate of sme and we remove the db entry CertificateChainFile
         system("/sbin/e-smith/db configuration setprop modSSL crt $ssl_crt/$server.$domain.crt");
         system("/sbin/e-smith/db configuration setprop modSSL key $ssl_key/$server.$domain.key");
         system("/sbin/e-smith/db configuration delprop modSSL CertificateChainFile");
+ 
         system("/sbin/e-smith/expand-template /home/e-smith/ssl.pem/pem");
         system("/sbin/e-smith/expand-template /etc/httpd/conf/httpd.conf");
         system("/sbin/service httpd-e-smith restart");
@@ -105,21 +106,21 @@ if (($domain_crt eq '') && ($domain_key eq ''))
 
 elsif (($domain_crt ne '') && ($domain_key ne ''))
     {
-        if (! open (CA, ">$ssl_crt/$domain.crt")){
+        if (! open (CRT, ">$ssl_crt/$domain.crt")){
             $fm->error('ERROR_OPEN_CRT','FIRST');
             # Tell the user something bad has happened
             return;
             }
-        print CA $domain_crt;
-        close CA;
+        print CRT $domain_crt;
+        close CRT;
 
-        if (! open (CRT, ">$ssl_key/$domain.key")){
+        if (! open (KEY, ">$ssl_key/$domain.key")){
             $fm->error('ERROR_OPEN_KEY','FIRST');
             # Tell the user something bad has happened
             return;
         }
-        print CRT $domain_key;
-        close CRT;
+        print KEY $domain_key;
+        close KEY;
 
         if (! open (CHAIN, ">$ssl_crt/chain.pem")){
             $fm->error('ERROR_OPEN_KEY','FIRST');
@@ -134,16 +135,21 @@ elsif (($domain_crt ne '') && ($domain_key ne ''))
         esmith::util::chownFile("root", "root","$ssl_crt/$domain.crt");
         chmod 0600, "$ssl_key/$domain.key";
         chmod 0600, "$ssl_crt/$domain.crt";
-
+        
+        #we load new certificates in db
         system("/sbin/e-smith/db configuration setprop modSSL crt $ssl_crt/$domain.crt");
         system("/sbin/e-smith/db configuration setprop modSSL key $ssl_key/$domain.key");
-	if  ($chain_crt ne '') {
+        
+        #we look if the certificate chain file is not equal to nothing, if not we load in db
+        if  ($chain_crt ne '') {
         system("/sbin/e-smith/db configuration setprop modSSL CertificateChainFile /home/e-smith/ssl.crt/chain.pem");
         }
+        
         system("/sbin/e-smith/expand-template /home/e-smith/ssl.pem/pem");
         system("/sbin/e-smith/expand-template /etc/httpd/conf/httpd.conf");
-        system("/sbin/service httpd-e-smith restart >/dev/null 2>&1");
-    
+        #system("/sbin/service httpd-e-smith restart >/dev/null 2>&1");
+            system("/sbin/service httpd-e-smith restart");
+
         system("/sbin/e-smith/signal-event ldap-update");
         system("/sbin/e-smith/signal-event email-update");
         #$fm->success('SUCCESS','FIRST');
