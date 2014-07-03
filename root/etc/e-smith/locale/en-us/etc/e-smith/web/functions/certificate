@@ -8,8 +8,8 @@
         </trans>
     </entry>
     <entry>
-        <base>certificate</base>
-        <trans>Manage your SSL certificates</trans>
+        <base>Certificate</base>
+        <trans>Manage  SSL certificates</trans>
     </entry> 
     <entry>
         <base>DESC_SSL_CERTIFICAT_CONFIG_PAGE</base>
