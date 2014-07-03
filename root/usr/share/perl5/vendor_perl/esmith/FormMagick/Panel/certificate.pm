@@ -97,7 +97,7 @@ if (($domain_crt eq '') && ($domain_key eq ''))
         system("/sbin/e-smith/signal-event ldap-update");
         system("/sbin/e-smith/signal-event email-update");
 
-               if (( $crt_path ne '') && ( $key_path ne '' )) { 
+               if (( -f $crt_path) && ( -f $key_path )) { 
                 system("/bin/rm $ssl_crt/$domain.crt");
                 system("/bin/rm $ssl_key/$domain.key");
                 system("/bin/rm $ssl_crt/chain.pem");
