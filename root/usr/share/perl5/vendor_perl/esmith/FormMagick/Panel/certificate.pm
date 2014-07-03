@@ -69,9 +69,9 @@ sub write_pem{
     my $q = $fm->{cgi};
     my $domain = $config_db->get_value('DomainName')|| die "Couldn't open ConfigDB\n";
 
-    my $domain_crt  = $q->param('ca_crt') || '';
-    my $domain_key = $q->param('ca_key') || '';
-    my $chain_crt = $q->param('chain_crt_file') || '';
+    my $domain_crt  = $q->param('ca_crt');
+    my $domain_key = $q->param('ca_key');
+    my $chain_crt = $q->param('chain_crt_file');
 
 
 if (($domain_crt eq '') && ($domain_key eq ''))
