@@ -87,8 +87,8 @@ if (($domain_crt eq '') && ($domain_key eq ''))
         my $chain_path  = "$ssl_crt" . '/chain.pem' || '';
         
         #we return to the default certificate of sme and we remove the db entry CertificateChainFile
-        system("/sbin/e-smith/db configuration setprop modSSL crt $ssl_crt/$server.$domain.crt");
-        system("/sbin/e-smith/db configuration setprop modSSL key $ssl_key/$server.$domain.key");
+        system("/sbin/e-smith/db configuration delprop modSSL crt");
+        system("/sbin/e-smith/db configuration delprop modSSL key");
         system("/sbin/e-smith/db configuration delprop modSSL CertificateChainFile");
  
         system("/sbin/e-smith/expand-template /home/e-smith/ssl.pem/pem");
