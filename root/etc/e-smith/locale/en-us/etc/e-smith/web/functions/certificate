@@ -14,9 +14,9 @@
     <entry>
         <base>DESC_SSL_CERTIFICAT_CONFIG_PAGE</base>
         <trans>
-         <![CDATA[The purpose of that contrib is to help to manage  SSL certificates. The SME Server can work with its own custom SSL Certificate.<br>
-         If you want to get back to default SME Server certificates, simply blank all the contents and save.<br>
-         In case of you set a wrong certificate, the server Web may crash. You will have to do a command line in a root Terminal to get back to the default certificate : <br><br>
+         <![CDATA[This panel is made to help the managing of  SSL certificates if you need to use commercial Certificates by example.<br>
+         If you want to get back to the  default SME Server certificates, simply blank all the contents and press save.<br>
+         In case of you set wrong certificates, the server Web may crash. You will have to do a command line in a root Terminal to get back to the default certificate : <br><br>
          <b>signal-event certificate-revert</b><br><br>]]>
          
         </trans>

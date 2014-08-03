@@ -1,0 +1,61 @@
+<!-- vim: ft=xml ts=4 sw=8 noet:
+-->
+<lexicon lang="fr">
+    <entry>
+        <base>FORM_TITLE</base>
+        <trans>
+               La gestion des certificats SSL
+        </trans>
+    </entry>
+    <entry>
+        <base>Certificate</base>
+        <trans>Gérer les certificats SSL</trans>
+    </entry> 
+    <entry>
+        <base>DESC_SSL_CERTIFICAT_CONFIG_PAGE</base>
+        <trans>
+         <![CDATA[Ce panneau est fait pour aider la gestion des certificats SSL, si vous avez besoin d'utiliser les certificats commerciaux par exemple.<br>
+         Si vous voulez revenir aux certificats par defaut de la SME Server, effacez tous les contenus et appuyez sur enregistrer.<br>
+         Dans le cas ou vous auriez défini de mauvais certificats, le serveur web peut se bloquer.<br> 
+         Vous aurez à faire une ligne de commande dans un terminal root pour revenir aux certificats par défaut: <br><br>
+         <b>signal-event certificate-revert</b><br><br>]]>
+         
+        </trans>
+    </entry>
+
+    <entry>
+        <base>ERROR_OPEN_KEY</base>
+        <trans>Impossible d'ouvrir les fichiers des certificats</trans>
+    </entry>
+
+    <entry>
+        <base>DESC_DOMAIN_CRT</base>
+        <trans>Collez ici le certificat complet (server.crt)</trans>
+    </entry> 
+
+    <entry>
+        <base>LABEL_DOMAIN_CRT</base>
+        <trans>Certificat SSL</trans>
+    </entry> 
+
+    <entry>
+        <base>DESC_DOMAIN_KEY</base>
+        <trans>Collez ici la clé privée complète (server.key)</trans>
+    </entry> 
+    
+    <entry>
+        <base>LABEL_DOMAIN_KEY</base>
+        <trans>Clé privée complète</trans>
+    </entry> 
+
+    <entry>
+        <base>DESC_CERTIFICATE_CHAINFILE</base>
+        <trans>Vous aurez peut être besoin du certificat intermédiaire du CA comme 'chain' certificat dans votre profil client. Collez ici le fichier complet de la chaîne intermédiaire.</trans>
+    </entry> 
+
+     <entry>
+        <base>LABEL_CERTIFICATE_CHAINFILE</base>
+        <trans>Certificat intermédiaire SSL</trans>
+    </entry> 
+</lexicon>
+
