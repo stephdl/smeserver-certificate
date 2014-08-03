@@ -1,5 +1,5 @@
 %define name smeserver-certificate
-%define version 0.0.3
+%define version 0.0.4
 %define release 1 
 
 Name: %{name}
@@ -46,6 +46,9 @@ rm -rf %{name}-%{version}
 %defattr(-,root,root)
 
 %changelog
+
+* Sun Aug 03 2014 Stephane de Labrusse <stephdl@de-labrusse.fr> -0.0.4-1
+- French translation
 
 * Tue Jul 01 2014 Stephane de Labrusse <stephdl@de-labrusse.fr> -0.01-1
 - Initial Release
