@@ -1,15 +1,6 @@
 #! /usr/bin/perl -w
 use strict;
 use warnings;
-use esmith::ConfigDB;
-
-
-    my $config_db = esmith::ConfigDB->open || die "Couldn't open ConfigDB\n";
-    my $ssl_crt = '/home/e-smith/ssl.crt';
-    my $ssl_key = '/home/e-smith/ssl.key';
-    my $domain = $config_db->get_value('DomainName');
-    my $server = $config_db->get_value('SystemName');
-
 
     system("/sbin/e-smith/db configuration delprop modSSL crt");
     system("/sbin/e-smith/db configuration delprop modSSL key");

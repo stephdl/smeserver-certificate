@@ -23,6 +23,11 @@
     </entry>
 
     <entry>
+        <base>ERROR_OPEN_KEY</base>
+        <trans>Impossible to open the certificates</trans>
+    </entry>
+
+    <entry>
         <base>DESC_DOMAIN_CRT</base>
         <trans>Paste Here the full certificate (server.crt)</trans>
     </entry> 
