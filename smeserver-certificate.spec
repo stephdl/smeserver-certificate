@@ -14,7 +14,7 @@ Source:	 %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-buildroot
 BuildArchitectures: noarch
 BuildRequires:	e-smith-devtools
-Requires:	e-smith-release >= 9.0
+Requires:	e-smith-release >= 8.0
 AutoReqProv: no
 
 %description
